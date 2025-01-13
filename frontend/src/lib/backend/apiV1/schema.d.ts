@@ -287,28 +287,28 @@ export interface components {
         };
         PageDtoPostDto: {
             /** Format: int64 */
-            totalItems?: number;
-            items?: components["schemas"]["PostDto"][];
+            totalItems: number;
+            items: components["schemas"]["PostDto"][];
             /** Format: int64 */
-            totalPages?: number;
+            totalPages: number;
             /** Format: int32 */
-            currentPageNumber?: number;
+            currentPageNumber: number;
             /** Format: int32 */
-            pageSize?: number;
+            pageSize: number;
         };
         PostDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            createDate?: string;
+            createDate: string;
             /** Format: date-time */
-            modifyDate?: string;
+            modifyDate: string;
             /** Format: int64 */
-            authorId?: number;
-            authorName?: string;
-            title?: string;
-            published?: boolean;
-            listed?: boolean;
+            authorId: number;
+            authorName: string;
+            title: string;
+            published: boolean;
+            listed: boolean;
         };
         PostStatisticsResBody: {
             /** Format: int64 */
