@@ -11,15 +11,24 @@ export default async function Page({
   searchParams: {
     searchKeywordType?: 'title' | 'content'
     searchKeyword?: string
+    pageSize?: number
+    page?: number
   }
 }) {
-  const { searchKeyword = '', searchKeywordType = 'title' } = await searchParams
+  const {
+    searchKeyword = '',
+    searchKeywordType = 'title',
+    pageSize = 10,
+    page = 1,
+  } = await searchParams
 
   const response = await client.GET('/api/v1/posts', {
     params: {
       query: {
         searchKeywordType,
         searchKeyword,
+        pageSize,
+        page,
       },
     },
   })
@@ -29,11 +38,24 @@ export default async function Page({
   return (
     <div>
       <form>
+        <input type="hidden" name="page" value="1" />
+        <select name="pageSize" defaultValue={pageSize}>
+          <option disabled>페이당 행 수</option>
+          <option value="10">10</option>
+          <option value="30">30</option>
+          <option value="50">50</option>
+        </select>
         <select name="searchKeywordType" defaultValue={searchKeywordType}>
+          <option disabled>검색어 타입</option>
           <option value="title">제목</option>
           <option value="content">내용</option>
         </select>
-        <input type="text" name="searchKeyword" defaultValue={searchKeyword} />
+        <input
+          type="text"
+          name="searchKeyword"
+          placeholder="검색어를 입력해주세요."
+          defaultValue={searchKeyword}
+        />
         <button type="submit">검색</button>
       </form>
 
