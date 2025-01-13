@@ -1,5 +1,6 @@
 import createClient from 'openapi-fetch'
 import type { paths } from '@/lib/backend/apiV1/schema'
+import Link from 'next/link'
 
 const client = createClient<paths>({
   baseUrl: 'http://localhost:8080',
@@ -33,7 +34,7 @@ export default async function Page({
     },
   })
 
-  const responsBody = response.data!!
+  const responseBody = response.data!!
 
   return (
     <div>
@@ -59,20 +60,38 @@ export default async function Page({
         <button type="submit">검색</button>
       </form>
 
-      <div>
-        <div>currentPageNumber: {responsBody.currentPageNumber}</div>
+      <div className="my-2">
+        <div>currentPageNumber: {responseBody.currentPageNumber}</div>
 
-        <div>pageSize: {responsBody.pageSize}</div>
+        <div>pageSize: {responseBody.pageSize}</div>
 
-        <div>totalPages: {responsBody.totalPages}</div>
+        <div>totalPages: {responseBody.totalPages}</div>
 
-        <div>totalItems: {responsBody.totalItems}</div>
+        <div>totalItems: {responseBody.totalItems}</div>
+      </div>
+
+      <hr />
+
+      <div className="flex gap-2 my-2 justify-center">
+        {Array.from({ length: responseBody.totalPages }, (_, i) => i + 1).map(
+          (pageNum) => (
+            <Link
+              key={pageNum}
+              className={`px-2 py-1 border rounded ${
+                pageNum === responseBody.currentPageNumber ? 'text-red-500' : ''
+              }`}
+              href={`?page=${pageNum}&pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`}
+            >
+              {pageNum}
+            </Link>
+          ),
+        )}
       </div>
 
       <hr />
 
       <ul>
-        {responsBody.items.map((item) => (
+        {responseBody.items.map((item) => (
           <li key={item.id} className="border-[2px] border-[gold] my-3">
             <div>id: {item.id}</div>
             <div>createDate: {item.createDate}</div>
@@ -85,6 +104,24 @@ export default async function Page({
           </li>
         ))}
       </ul>
+
+      <hr />
+
+      <div className="flex gap-2 my-2 justify-center">
+        {Array.from({ length: responseBody.totalPages }, (_, i) => i + 1).map(
+          (pageNum) => (
+            <Link
+              key={pageNum}
+              className={`px-2 py-1 border rounded ${
+                pageNum === responseBody.currentPageNumber ? 'text-red-500' : ''
+              }`}
+              href={`?page=${pageNum}&pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`}
+            >
+              {pageNum}
+            </Link>
+          ),
+        )}
+      </div>
     </div>
   )
 }
