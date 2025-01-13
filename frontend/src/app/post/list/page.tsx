@@ -25,8 +25,8 @@ export default async function Page() {
             <div>authorId: {item.authorId}</div>
             <div>authorName: {item.authorName}</div>
             <div>title: {item.title}</div>
-            <div>published: {item.published}</div>
-            <div>listed: {item.listed}</div>
+            <div>published: {new String(item.published)}</div>
+            <div>listed: {`${item.listed}`}</div>
           </li>
         ))}
       </ul>
