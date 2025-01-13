@@ -18,8 +18,8 @@ export default async function Page({
   const response = await client.GET('/api/v1/posts', {
     params: {
       query: {
-        searchKeywordType: searchKeywordType,
-        searchKeyword: searchKeyword,
+        searchKeywordType,
+        searchKeyword,
       },
     },
   })

@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.stream.IntStream;
+
 @Configuration
 @RequiredArgsConstructor
 public class BaseInitData {
@@ -54,6 +56,9 @@ public class BaseInitData {
 
         Member memberUser5 = memberService.join("user5", "1234", "유저5");
         if(AppConfig.isNotProd()) memberUser5.setApiKey("user5");
+
+        Member memberUser6 = memberService.join("user6", "1234", "유저6");
+        if(AppConfig.isNotProd()) memberUser5.setApiKey("user6");
     }
 
     @Transactional
@@ -64,6 +69,8 @@ public class BaseInitData {
         Member memberUser2 = memberService.findByUsername("user2").get();
         Member memberUser3 = memberService.findByUsername("user3").get();
         Member memberUser4 = memberService.findByUsername("user4").get();
+        Member memberUser5 = memberService.findByUsername("user5").get();
+        Member memberUser6 = memberService.findByUsername("user6").get();
 
         Post post1 = postService.write(
                 memberUser1,
@@ -128,6 +135,26 @@ public class BaseInitData {
                 "22시 까지 18명을 모아야 합니다.",
                 false,
                 true
+        );
+
+        IntStream.rangeClosed(9, 100).forEach(
+                i -> postService.write(
+                        memberUser5,
+                        "테스트 게시물 " + i,
+                        "테스트 게시물 " + i + " 내용",
+                        i % 3 != 0,
+                        i % 4 != 0
+                )
+        );
+
+        IntStream.rangeClosed(101, 200).forEach(
+                i -> postService.write(
+                        memberUser6,
+                        "테스트 게시물 " + i,
+                        "테스트 게시물 " + i + " 내용",
+                        i % 5 != 0,
+                        i % 6 != 0
+                )
         );
     }
 }
