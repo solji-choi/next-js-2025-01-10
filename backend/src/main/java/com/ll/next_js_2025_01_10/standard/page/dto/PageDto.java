@@ -7,11 +7,11 @@ import java.util.List;
 
 @Getter
 public class PageDto<T> {
-    private long totalItems;
-    private List<T> items;
-    private long totalPages;
-    private int currentPageNumber;
-    private int pageSize;
+    private final long totalItems;
+    private final List<T> items;
+    private final long totalPages;
+    private final int currentPageNumber;
+    private final int pageSize;
 
     public PageDto(Page<T> page) {
         this.totalItems = page.getTotalElements();

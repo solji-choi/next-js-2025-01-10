@@ -6,7 +6,9 @@ import io.jsonwebtoken.security.Keys;
 import lombok.SneakyThrows;
 
 import javax.crypto.SecretKey;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -175,8 +177,23 @@ public class Ut {
 
         public static void run(String cmd) {
             try {
-                ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", cmd);
+                ProcessBuilder processBuilder = new ProcessBuilder("C:\\Program Files\\Git\\bin\\bash.exe", "-c", cmd);
                 Process process = processBuilder.start();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line;
+
+                // 프로세스의 출력 읽기
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line); // IntelliJ 콘솔에 출력
+                }
+
+                // 에러 출력 읽기
+                BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+                while ((line = errorReader.readLine()) != null) {
+                    System.err.println(line); // 에러 메시지를 IntelliJ 콘솔에 출력
+                }
+
                 process.waitFor(1, TimeUnit.MINUTES);
             } catch (Exception e) {
                 e.printStackTrace();

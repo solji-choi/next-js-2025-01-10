@@ -8,19 +8,12 @@ import java.time.LocalDateTime;
 @Getter
 public class PostDto {
     private long id;
-
     private LocalDateTime createDate;
-
     private LocalDateTime modifyDate;
-
     private long authorId;
-
     private String authorName;
-
     private String title;
-
     private boolean published;
-
     private boolean listed;
 
     public PostDto(Post post) {
