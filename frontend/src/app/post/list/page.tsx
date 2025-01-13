@@ -1,13 +1,6 @@
-type PostDto = {
-  id: number
-  createDate: string
-  modifyDate: string
-  authorId: number
-  authorName: string
-  title: string
-  published: boolean
-  listed: boolean
-}
+import type { components } from '@/lib/backend/apiV1/schema'
+
+type PostDto = components['schemas']['PostDto']
 
 type PostItemPageDto = {
   currentPageNumber: number
