@@ -8,6 +8,7 @@ import com.ll.next_js_2025_01_10.domain.post.post.service.PostService;
 import com.ll.next_js_2025_01_10.global.exceptions.ServiceException;
 import com.ll.next_js_2025_01_10.global.rq.Rq;
 import com.ll.next_js_2025_01_10.global.rsData.RsData;
+import com.ll.next_js_2025_01_10.standard.base.Empty;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -49,7 +50,7 @@ public class ApiV1PostCommentController {
     @DeleteMapping("/{id}")
     @Transactional
     @Operation(summary = "댓글 삭제")
-    public RsData<Void> delete (
+    public RsData<Empty> delete (
             @PathVariable long postId,
             @PathVariable long id
     ) {

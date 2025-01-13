@@ -12,6 +12,14 @@ export default async function Page({ params }: { params: { id: number } }) {
     },
   })
 
+  if (response.error) {
+    return (
+      <>
+        결과코드 :{response.error.resultCode}, 메세지 : {response.error.msg}
+      </>
+    )
+  }
+
   const post = response.data!!
 
   return <ClientPage post={post} />

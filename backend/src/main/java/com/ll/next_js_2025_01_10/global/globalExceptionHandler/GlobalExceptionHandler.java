@@ -3,6 +3,7 @@ package com.ll.next_js_2025_01_10.global.globalExceptionHandler;
 import com.ll.next_js_2025_01_10.global.app.AppConfig;
 import com.ll.next_js_2025_01_10.global.exceptions.ServiceException;
 import com.ll.next_js_2025_01_10.global.rsData.RsData;
+import com.ll.next_js_2025_01_10.standard.base.Empty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.Comparator;
@@ -20,7 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
     @ExceptionHandler(NoHandlerFoundException.class)
-    public ResponseEntity<RsData<Void>> handle(NoHandlerFoundException ex) {
+    public ResponseEntity<RsData<Empty>> handle(NoHandlerFoundException ex) {
 
         if (AppConfig.isNotProd()) ex.printStackTrace();
 
@@ -33,7 +35,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<RsData<Void>> handle(NoSuchElementException ex) {
+    public ResponseEntity<RsData<Empty>> handle(NoSuchElementException ex) {
 
         if (AppConfig.isNotProd()) ex.printStackTrace();
 
@@ -46,7 +48,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<RsData<Void>> handle(MethodArgumentNotValidException ex) {
+    public ResponseEntity<RsData<Empty>> handle(MethodArgumentNotValidException ex) {
 
         if (AppConfig.isNotProd()) ex.printStackTrace();
 
@@ -67,12 +69,13 @@ public class GlobalExceptionHandler {
                 ));
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ServiceException.class)
-    public ResponseEntity<RsData<Void>> handle(ServiceException ex) {
+    public ResponseEntity<RsData<Empty>> handle(ServiceException ex) {
 
         if (AppConfig.isNotProd()) ex.printStackTrace();
 
-        RsData<Void> rsData = ex.getRsData();
+        RsData<Empty> rsData = ex.getRsData();
 
         return ResponseEntity
                 .status(rsData.getStatusCode())

@@ -8,6 +8,7 @@ import com.ll.next_js_2025_01_10.domain.post.post.service.PostService;
 import com.ll.next_js_2025_01_10.global.exceptions.ServiceException;
 import com.ll.next_js_2025_01_10.global.rq.Rq;
 import com.ll.next_js_2025_01_10.global.rsData.RsData;
+import com.ll.next_js_2025_01_10.standard.base.Empty;
 import com.ll.next_js_2025_01_10.standard.page.dto.PageDto;
 import com.ll.next_js_2025_01_10.standard.search.SearchKeywordTypeV1;
 import io.swagger.v3.oas.annotations.Operation;
@@ -94,7 +95,7 @@ public class ApiV1PostController {
             Member author = rq.getActor();
 
             if(author == null) {
-                throw new ServiceException("401-1", "로그인이 필요합니다.");
+                throw new ServiceException("401-1", "비밀글입니다. 로그인 후 이용해주세요.");
             }
 
             post.checkActorCanRead(author);
@@ -168,7 +169,7 @@ public class ApiV1PostController {
     @DeleteMapping("/{id}")
     @Transactional
     @Operation(summary = "글 삭제", description = "작성자 본인 뿐 아니라 관리자도 삭제 가능")
-    public RsData<Void> delete(@PathVariable long id) {
+    public RsData<Empty> delete(@PathVariable long id) {
         Member author = rq.getActor();
         Post post = postService.findById(id).get();
 
