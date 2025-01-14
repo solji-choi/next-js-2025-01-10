@@ -40,6 +40,7 @@ export default function ClientPage() {
     }
 
     alert(response.data.msg)
+    router.replace('/')
   }
 
   return (
